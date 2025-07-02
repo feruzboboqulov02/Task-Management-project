@@ -32,7 +32,7 @@ A simple and secure task management REST API built with **Node.js**, **Express.j
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/task-manager-api.git
+git clone https://github.com/feruzboboqulov02/Task-Management-project.git
 cd task-manager-api
 
 
