@@ -2,7 +2,7 @@ import BaseError from "../utils/error.handler.js";
 import TaskModel from "../models/Task.js";
 
 
-class PostService{
+class TaskService{
 
     async create(task,author){
         const newTask = await TaskModel.create({...task,author});
@@ -21,16 +21,16 @@ class PostService{
     }
 
     async update(id,task){
-        if(!id) throw new Error('id is required');
+        if(!id) throw BaseError.BadRequest('id is required');
         const updatedTask = await TaskModel.findByIdAndUpdate(id,task,{new:true, runValidators:true});
         return updatedTask
     }
 
     async delete(id){
-        if(!id) throw new Error('id is required');
+        if(!id) throw BaseError.BadRequest('id is required');
         const deletedTask = await TaskModel.findByIdAndDelete(id);
         return deletedTask
     }
 }
 
-export default new PostService();
+export default new TaskService();

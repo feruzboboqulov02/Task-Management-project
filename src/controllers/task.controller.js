@@ -1,4 +1,3 @@
-import Task from "../models/Task.js";
 import errorHandler from "../utils/error.handler.js";
 import taskService from "../services/task.service.js";
 

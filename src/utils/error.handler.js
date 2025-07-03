@@ -1,21 +1,16 @@
-class BaseError extends Error{
-    status
+// utils/error.handler.js
+const errorHandler = (err, req, res, next) => {
+  console.error(err.stack || err.message);
+
+  const statusCode = err.status || 500;
+  const message = err.message || "Internal Server Error";
+  const errors = err.errors || [];
+
+  res.status(statusCode).json({
+    success: false,
+    message,
     errors
+  });
+};
 
-    constructor(status, message, errors ) {
-        super(message)
-        this.status = status
-        this.errors = errors;
-    }
-
-    static UnauthorizedError() {
-        return new BaseError(401, 'User is not authorized')
-    }
-
-    static BadRequest(message, errors = []) {
-        return new BaseError(400, message, errors)
-    }
-}
-
-export default BaseError
-
+export default errorHandler;
