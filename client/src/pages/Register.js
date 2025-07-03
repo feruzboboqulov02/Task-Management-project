@@ -19,14 +19,14 @@ export default function Register() {
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async e => {
-    e.preventDefault();
-    try {
-      await axios.post("http://localhost:5000/api/auth/register", form);
-      setMsg(" Registration successful! You can now log in.");
-    } catch (err) {
-      setMsg(" Registration failed. Try a different email.");
-    }
-  };
+  e.preventDefault();
+  try {
+    const res = await axios.post("http://localhost:5000/api/auth/register", form);
+    setMsg(`Registration successful! You can now log in with your new account. Token: ${res.data.token}`);
+  } catch (err) {
+    setMsg("Registration failed. Try a different email.");
+  }
+};
 
   return (
     <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", alignItems: "stretch" }}>
