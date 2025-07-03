@@ -11,13 +11,13 @@ class AuthService{
             throw new Error('User already exists');
         }
         const hashedPassword = await bcrypt.hash(password,10);
-        const user = new UserModel({email,password:hashedPassword});
+        const user = new UserModel({username,email,password:hashedPassword});
         await user.save();
         return user;
     }
 
-    async login(email,password){
-        const user = await UserModel.findOne({email});
+    async login(username,password){
+        const user = await UserModel.findOne({username});
         if(!user){
             throw new Error('User not found');
         }
