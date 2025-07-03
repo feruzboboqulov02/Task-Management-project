@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 class AuthService{
 
-    async register(email,password,email){
+    async register(username,password,email){
         const existingUser = await UserModel.findOne({email});
         if(existingUser){
             throw new Error('User already exists');
