@@ -22,7 +22,7 @@ class AuthController{
         const { email, password } = req.body;
         const user = await authService.login(email, password);
 
-        // Generate JWT token
+        
         const token = jwt.sign(
             { id: user._id, email: user.email },
             process.env.JWT_SECRET,

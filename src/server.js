@@ -6,7 +6,7 @@ import app from './app.js';
 
 const PORT = process.env.PORT || 5000;
 
-// ✅ Only connect and start server if not testing
+
 if (process.env.NODE_ENV !== 'test') {
   connectDB()
     .then(() => {
