@@ -38,7 +38,7 @@ describe("Task Routes", () => {
     const res = await request(app)
       .post("/api/tasks")
       .set("Authorization", `Bearer ${token}`)
-      .send({ title: "Test Task", description: "desc" }); // <-- removed completed
+      .send({ title: "Test Task", description: "desc" }); 
     expect(res.status).toBe(201);
     expect(res.body.title).toBe("Test Task");
     taskId = res.body._id;

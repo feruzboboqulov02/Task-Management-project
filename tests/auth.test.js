@@ -25,7 +25,7 @@ describe('Auth Routes', () => {
             email: 'test@example.com'
       });
 
-    console.log(res.body); // DEBUG
+    console.log(res.body); 
 
     expect(res.status).toBe(201);
     expect(res.body.token).toBeDefined();

@@ -68,3 +68,6 @@ npm run dev
 #API Endpoints
 POST /api/auth/register - Register a new user
 POST /api/auth/login - Login user
+
+#TEST
+npm test

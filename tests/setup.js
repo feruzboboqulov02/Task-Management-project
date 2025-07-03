@@ -27,7 +27,6 @@ afterAll(async () => {
 });
 export const request = supertest(app);
 
-// ✅ Add this helper function
 export const registerAndLogin = async () => {
   const user = {
     name: 'Test User',
