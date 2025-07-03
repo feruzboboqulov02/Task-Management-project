@@ -1,37 +1,32 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import authService from "../services/auth.service.js";
+import errorHandler from '../utils/error.handler';
+import { max } from "mathjs";
 
-const register = async (req, res) => {
-    const {username, password, email,isAdmin} = req.body;
-
-    const existingUser = await User.findOne({username});
-    if(existingUser){
-        return res.status(400).json({message: "User already exists"});
+class AuthController{
+    async register(req, res, next) {
+     try {
+        const {email,password,username}= req.body;
+        const user = await authService.register(email,password,username);
+        res.status(201).json({user});
+     } catch (error) {
+        next(error);
+     }
     }
-    const hashedPassword = await bcrypt.hash(password,10)
-    const user = await User.create({
-        username,
-        password: hashedPassword,
-        email,
-        isAdmin
-    })
-    await user.save();
-    res.status(201).json({message: "User created successfully"});
+    
+
+    async login (req,res,next){
+    try {
+        const {username, password} = req.body;
+        const data = await authService.login(username,password);
+        res.cookie('token', data, {httpOnly: true,maxAge: 24 * 60 * 60 * 1000});
+        res.status(200).json({data});
+    } catch (error) {
+        next(error);
+    }
 }
 
-const login = async (req,res) =>{
-    const {username, password} = req.body;
-    const user = await User.findOne({username});
-    if(!user){
-        return next(new Error('The User is not found'));
-    }
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if(!isPasswordValid){
-        return next(new Error('Invalid password'));
-    }
-    const accessToken = jwt.sign({userId: user._id}, process.env.JWT_SECRET);
-    res.status(200).json({accessToken});
 }
-
-export{ register, login };
+export default new AuthController();
