@@ -1,4 +1,4 @@
-
+import BaseError from "../utils/error.handler.js";
 import TaskModel from "../models/Task.js";
 
 
@@ -15,7 +15,7 @@ class PostService{
     }
 
     async getById(id){
-        if(!id) throw new Error('id is required');
+        if(!id) throw BaseError.BadRequest('id is required');
         const task = await TaskModel.findById(id);
         return task
     }

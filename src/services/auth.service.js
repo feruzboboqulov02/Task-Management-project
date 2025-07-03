@@ -1,15 +1,16 @@
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
+import BaseError from "../utils/error.handler.js";
 
 class AuthService {
   async register({ username, password,email }) {
     if (!username || !password || !email) {
-      throw new Error("Username and password are required");
+      throw BaseError.BadRequest("All fields are required");
     }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      throw new Error("User already exists");
+      throw BaseError.BadRequest("User already exists");
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -19,10 +20,10 @@ class AuthService {
 
   async login(email, password) {
     const user = await User.findOne({ email });
-    if (!user) throw new Error("User not found");
+    if (!user) throw BaseError.BadRequest("User not found");
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) throw new Error("Invalid password");
+    if (!isMatch) throw BaseError.BadRequest("Invalid password");
     
     return user;
   }

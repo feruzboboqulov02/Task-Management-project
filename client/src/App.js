@@ -9,7 +9,7 @@ const containerStyle = {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  background: "linear-gradient(135deg, #a4508b 0%, #5f0a87 100%)",
+  background: "linear-gradient(135deg,rgb(84, 70, 80) 0%, #5f0a87 100%)",
   fontFamily: "Segoe UI, Arial, sans-serif",
   padding: "2rem"
 };

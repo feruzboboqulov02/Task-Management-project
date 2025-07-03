@@ -1,12 +1,21 @@
-const errorHandler = (err, req, res, next) => {
-  console.error(err.stack);
+class BaseError extends Error{
+    status
+    errors
 
-  const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
+    constructor(status, message, errors ) {
+        super(message)
+        this.status = status
+        this.errors = errors;
+    }
 
-  res.status(statusCode).json({
-    message: err.message || 'Internal Server Error',
-    stack: process.env.NODE_ENV === 'production' ? '^' : err.stack
-  });
-};
+    static UnauthorizedError() {
+        return new BaseError(401, 'User is not authorized')
+    }
 
-export default errorHandler;
+    static BadRequest(message, errors = []) {
+        return new BaseError(400, message, errors)
+    }
+}
+
+export default BaseError
+
