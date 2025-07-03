@@ -30,7 +30,7 @@ const cardStyle = {
 
 const loginCardStyle = {
   ...cardStyle,
-  height: '400px', // changed to a fixed height
+  height: '400px', 
   overflowY: 'auto'
 };
 
@@ -61,7 +61,7 @@ const activeButtonStyle = {
 
 function App() {
   const [token, setToken] = useState("");
-  const [page, setPage] = useState("login"); // "login", "register", or "tasks"
+  const [page, setPage] = useState("login")
 
   // Show Tasks if logged in
   if (token) {
@@ -83,7 +83,7 @@ function App() {
     );
   }
 
-  // Show Login or Register
+  
   return (
     <div style={containerStyle}>
       <div style={page === "login" ? loginCardStyle : cardStyle}>
