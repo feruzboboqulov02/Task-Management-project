@@ -1,22 +1,33 @@
-import supertest from "supertest";
-import app from "../src/app.js";
+import mongoose from 'mongoose';
+import request from 'supertest';
+import dotenv from 'dotenv';
+import app from '../src/app.js';
+import e from 'express';
 
+dotenv.config();
 
+beforeAll(async () => {
+  await mongoose.connect(process.env.MONGO_URI_TEST);
+});
 
-describe("POST /users", ()=>{
+afterAll(async () => {
+  await mongoose.connection.dropDatabase();
+  await mongoose.connection.close();
+});
 
-    describe("given  a username and password",()=>{
-        test("should respond woth a 200 status code", async ()=>{
-            const response = await supertest(app).post("/users").send({
-                username: "username",
-                password: "password"
-            })
-            expect(response.statusCode).toBe(200)
-        })
-    })
+describe('Auth Routes', () => {
+  it('registers a user successfully', async () => {
+    const res = await request(app)
+      .post('/api/auth/register')
+      .send({
+          username: 'testuser',
+            password: 'testpassword',
+            email: 'test@example.com'
+      });
 
-    describe("username or password is invalid",()=>{
+    console.log(res.body); // DEBUG
 
-    })
-
-})
+    expect(res.status).toBe(201);
+    expect(res.body.token).toBeDefined();
+  });
+});

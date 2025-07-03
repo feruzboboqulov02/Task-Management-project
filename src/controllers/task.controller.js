@@ -5,8 +5,8 @@ import taskService from "../services/task.service.js";
 class TaskController{
     async create(req,res,next){
         try {
-            const task = await taskService.create(req.body,req.user.userId);
-            return res.status(201).json({task});
+            const task = await taskService.create(req.body);
+            return res.status(201).json(task);
         } catch (error) {
             next(error);
         }
@@ -16,7 +16,7 @@ class TaskController{
         try {
             console.log("Request time:", req.requestTime);
             const allTasks = await taskService.getAll();
-            return res.status(200).json({allTasks});
+            return res.status(200).json(allTasks);
         } catch (error) {
             next(error);
         }
@@ -26,7 +26,7 @@ class TaskController{
     async getTaskById (req,res,next){
         try {
             const task = await taskService.getById(req.params.id);
-            return res.status(200).json({task});
+            return res.status(200).json(task);
         } catch (error) {
             next(error);
         }
@@ -36,7 +36,7 @@ class TaskController{
         try {
             const {body, params} = req;
             const post = await taskService.update(params.id,body);
-            return res.status(200).json({post});
+            return res.status(200).json(post);
         } catch (error) {
             next(error);
         }
@@ -46,7 +46,7 @@ class TaskController{
     async deleteTask(req,res,next){
         try {
             const task = await taskService.delete(req.params.id);
-            return res.status(200).json({task});
+            return res.status(200).json({message:'Task deleted'});
         } catch (error) {
             next(error);
         }

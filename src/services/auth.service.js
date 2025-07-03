@@ -1,35 +1,31 @@
-import UserModel from "../models/User.js";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
-
-class AuthService{
-
-    async register(username,password,email){
-        const existingUser = await UserModel.findOne({email});
-        if(existingUser){
-            throw new Error('User already exists');
-        }
-        const hashedPassword = await bcrypt.hash(password,10);
-        const user = new UserModel({username,email,password:hashedPassword});
-        await user.save();
-        return user;
+class AuthService {
+  async register({ username, password,email }) {
+    if (!username || !password || !email) {
+      throw new Error("Username and password are required");
     }
 
-    async login(username,password){
-        const user = await UserModel.findOne({username});
-        if(!user){
-            throw new Error('User not found');
-        }
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if(!isPasswordValid){
-            throw new Error('Invalid password');
-        }
-        const accessToken = jwt.sign({userId: user._id}, process.env.JWT_SECRET);
-        return accessToken;
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      throw new Error("User already exists");
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await User.create({ email,username, password: hashedPassword });
+    return user;
+  }
 
+  async login(email, password) {
+    const user = await User.findOne({ email });
+    if (!user) throw new Error("User not found");
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) throw new Error("Invalid password");
+    
+    return user;
+  }
 }
 
 export default new AuthService();

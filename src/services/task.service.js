@@ -5,7 +5,7 @@ import TaskModel from "../models/Task.js";
 class PostService{
 
     async create(task,author){
-        const newTask = await PostModel.create({...task,author});
+        const newTask = await TaskModel.create({...task,author});
         return newTask
     }
 
