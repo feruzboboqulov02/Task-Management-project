@@ -66,6 +66,12 @@ JWT_SECRET=your_jwt_secret_key_here
 ### 4. Start the server
 npm run dev
 
+### 5. Start the fronend
+
+cd client 
+npm start
+
+
 ---
 ## API Endpoints
 - **POST** `/api/auth/register` - Register a new user

@@ -22,7 +22,7 @@ export default function Register() {
   e.preventDefault();
   try {
     const res = await axios.post("http://localhost:5000/api/auth/register", form);
-    setMsg(`Registration successful! You can now log in with your new account. Token: ${res.data.token}`);
+    setMsg(`Registration successful! You can now log in with your new account.`);
   } catch (err) {
     setMsg("Registration failed. Try a different email.");
   }
