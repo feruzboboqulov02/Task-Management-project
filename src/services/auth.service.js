@@ -20,7 +20,7 @@ class AuthService {
 
   async login(email, password) {
     const user = await User.findOne({ email });
-    if (!user) throw BaseError.BadRequest("User not found");
+    if (!user) throw BaseError.Unauthorized("User not found");
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw BaseError.BadRequest("Invalid password");
